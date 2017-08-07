@@ -1,4 +1,5 @@
 <?php
+//isa fix 1
 class AuditWalletAction extends CAction{
 	private $controller;
 
