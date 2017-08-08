@@ -1,5 +1,5 @@
 <?php
-//isa fix 1
+
 class AuditWalletAction extends CAction{
 	private $controller;
 
@@ -23,10 +23,11 @@ class AuditWalletAction extends CAction{
 
 
 	private function doDoge($add){
-	 $s1 = file_get_contents("https://dogechain.info/chain/Dogecoin/q/addressbalance/".$add);
-	 $s2 = file_get_contents("http://bkchain.org/doge/api/v1/address/balance/".$add);
-	 $s2 = json_decode($s2);
-	 $s2 = (float)($s2[0]->balance/100000000);
+	 $s1 = file_get_contents("https://dogechain.info/chain/Dogecoin/q/addressbalance/".$add); //link live
+	 //$s2 = file_get_contents("http://bkchain.org/doge/api/v1/address/balance/".$add);	//link dead, domain looks on sale, below is new link
+	 $s2 = file_get_contents("https://dogechain.info/api/v1/address/balance/".$add);//updated new links
+	 $s2 = json_decode($s2);	//
+	 $s2 = (float)($s2[0]->balance/100000000); //
 		 if($s1 != ""){
 		  $val = min(array($s1));
 		  echo json_encode(array("val"=>$val));die;
@@ -34,7 +35,7 @@ class AuditWalletAction extends CAction{
 	}
 
 	private function doLtc($add){
-	 $s1 = file_get_contents("http://ltc.blockr.io/api/v1/address/balance/".$add);
+	 $s1 = file_get_contents("http://ltc.blockr.io/api/v1/address/balance/".$add); //link live
 	 $s1 = json_decode($s1);
 	 $s1 = $s1->data->balance;
 		 if($s1 != ""){
@@ -44,13 +45,13 @@ class AuditWalletAction extends CAction{
 	}
 
 	private function doBtc($add){
-	 $s1 = file_get_contents("http://blockchain.info/q/addressbalance/".$add);
-	 $s2 = file_get_contents("http://btc.blockr.io/api/v1/address/balance/".$add);
-	 $s3 = file_get_contents("https://btcplex.com/api/addressbalance/".$add);
+	 $s1 = file_get_contents("http://blockchain.info/q/addressbalance/".$add); //link live
+	 $s2 = file_get_contents("http://btc.blockr.io/api/v1/address/balance/".$add); //link live
+	 $s3 = file_get_contents("https://btcplex.com/api/addressbalance/".$add); //redirected to different page, link not ready
 	 $s1 = (float)($s1/100000000);
-	 $s2 = json_decode($s2);
-	 $s2 = $s2->data->balance;
-	 $s3 = (float)($s3/100000000);
+	 $s2 = json_decode($s2); //
+	 $s2 = $s2->data->balance; //
+	 $s3 = (float)($s3/100000000); //
 		 if($s1 != ""){
 		  $val = min(array($s1));
 		  echo json_encode(array("val"=>$val));die;
